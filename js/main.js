@@ -42,9 +42,7 @@ const logToTerminal = (message, type = '') => {
 var serviveUuid = 0xFFE0
 var characteristicUuid = 0xFFE1
 
-const terminal = new BluetoothTerminal(serviveUuid,characteristicUuid,
-
-'\n','\n');
+const terminal = new BluetoothTerminal();
 
 
 //const terminal = new BluetoothTerminal();
@@ -67,7 +65,7 @@ terminal._log = function(...messages) {
 
 // Implement own send function to log outcoming data to the terminal.
 const send = (data) => {7
- 
+
   terminal.send(data).
       then(() => logToTerminal(data, 'out')).
       catch((error) => logToTerminal(error));

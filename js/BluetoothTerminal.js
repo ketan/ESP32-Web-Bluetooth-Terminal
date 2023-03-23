@@ -9,7 +9,7 @@ class BluetoothTerminal {
    * @param {string} [receiveSeparator='\n'] - Receive separator
    * @param {string} [sendSeparator='\n'] - Send separator
    */
-  constructor(serviceUuid = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E", characteristicUuidTx = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E", characteristicUuidRx = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E",
+  constructor(serviceUuid = "6e400001-b5a3-f393-e0a9-e50e24dcca9e", characteristicUuidTx = "6e400003-b5a3-f393-e0a9-e50e24dcca9e", characteristicUuidRx = "6e400002-b5a3-f393-e0a9-e50e24dcca9e",
       receiveSeparator = '\n', sendSeparator = '\n') {
     // Used private variables.
     this._receiveBuffer = ''; // Buffer containing not separated data.
@@ -154,8 +154,8 @@ class BluetoothTerminal {
    *                   rejected if something went wrong
    */
   send(data) {
-	  
-	  
+
+
     // Convert data to the string using global object.
     data = String(data || '');
 
@@ -179,7 +179,7 @@ class BluetoothTerminal {
     let promise = this._writeToCharacteristic(this._characteristicRx, chunks[0]);
 
     // Iterate over chunks if there are more than one of it.
-	
+
     for (let i = 1; i < chunks.length; i++) {
       // Chain new promise.
       promise = promise.then(() => new Promise((resolve, reject) => {
@@ -194,7 +194,7 @@ class BluetoothTerminal {
             catch(reject);
       }));
     }
- 
+
     return promise;
   }
 
@@ -260,20 +260,13 @@ class BluetoothTerminal {
   _requestBluetoothDevice() {
 
     this._log('Requesting bluetooth device... with service1 ' + this._serviceUuid);
-	
-    return navigator.bluetooth.requestDevice({
-		
-	  filters: [{
-        name: 'ESP32'
-      }],
-      optionalServices: ['6e400001-b5a3-f393-e0a9-e50e24dcca9e',
-	  0xFFE0
-	  ]
 
+    return navigator.bluetooth.requestDevice({
+      filters: [{services: [this._serviceUuid]}],
     }).
-	
- 
-	
+
+
+
 	//services: ['c48e6067-5295-48d3-8d5c-0395f61792b1']
         then((device) => {
           this._log('"' + device.name + '" bluetooth device selected');
@@ -381,13 +374,13 @@ class BluetoothTerminal {
    * @private
    */
   _handleCharacteristicValueChanged(event) {
-	  
+
     const value = new TextDecoder().decode(event.target.value);
 
     for (const c of value) {
       if (c === this._receiveSeparator) {
         const data = this._receiveBuffer.trim();
-		
+
         this._receiveBuffer = '';
 
         if (data) {
