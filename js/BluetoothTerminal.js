@@ -13,7 +13,7 @@ class BluetoothTerminal {
       receiveSeparator = '\n', sendSeparator = '\n') {
     // Used private variables.
     this._receiveBuffer = ''; // Buffer containing not separated data.
-    this._maxCharacteristicValueLength = 20; // Max characteristic value length.
+    this._maxCharacteristicValueLength = 60; // Max characteristic value length.
     this._device = null; // Device object cache.
     this._service = null;
     this._characteristicTx = null; // Characteristic object cache.
