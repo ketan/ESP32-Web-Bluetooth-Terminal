@@ -5,6 +5,7 @@ const disconnectButton = document.getElementById('disconnect');
 const terminalContainer = document.getElementById('terminal');
 const sendForm = document.getElementById('send-form');
 const inputField = document.getElementById('input');
+const clearButton = document.getElementById('clear');
 
 // Helpers.
 const defaultDeviceName = 'Terminal';
@@ -78,6 +79,11 @@ connectButton.addEventListener('click', () => {
         deviceNameLabel.textContent = terminal.getDeviceName() ?
             terminal.getDeviceName() : defaultDeviceName;
       });
+});
+
+
+clearButton.addEventListener('click', ()=> {
+  terminalContainer.innerHTML = '';
 });
 
 disconnectButton.addEventListener('click', () => {
